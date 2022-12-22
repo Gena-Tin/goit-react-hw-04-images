@@ -46,7 +46,7 @@ export function App() {
         console.log('catch = ' + error);
       })
       .finally(() => setIsLoading(false));
-      
+    // eslint-disable-next-line
   }, [searchQuery, page]);
 
   useEffect(() => {
