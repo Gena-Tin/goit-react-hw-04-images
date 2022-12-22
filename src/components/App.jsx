@@ -35,7 +35,7 @@ export function App() {
         if (page === 1) {
           setImages(data.hits);
         } else {
-          setImages(() => [...images, ...data.hits]);
+          setImages(prevState => [...prevState, ...data.hits]);
           window.scrollTo({
             top: document.documentElement.scrollHeight,
             behavior: 'smooth',
@@ -46,7 +46,6 @@ export function App() {
         console.log('catch = ' + error);
       })
       .finally(() => setIsLoading(false));
-    // eslint-disable-next-line
   }, [searchQuery, page]);
 
   useEffect(() => {
