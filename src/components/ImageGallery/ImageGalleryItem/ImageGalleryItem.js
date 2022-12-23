@@ -12,7 +12,6 @@ const ImageGalleryItem = ({ images }) =>
       />
     </li>
   ));
-export default ImageGalleryItem;
 
 ImageGalleryItem.propTypes = {
   images: PropTypes.arrayOf(
@@ -24,3 +23,5 @@ ImageGalleryItem.propTypes = {
     }),
   ),
 }
+
+export default ImageGalleryItem;

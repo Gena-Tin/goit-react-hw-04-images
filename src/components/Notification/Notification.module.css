@@ -1,0 +1,10 @@
+.notification{
+    margin: auto;
+    color: #0000006c;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.notification:hover{
+    color: #69709c;
+}

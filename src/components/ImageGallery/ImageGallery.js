@@ -17,9 +17,10 @@ const ImageGallery = ({ toggleModal, children }) => {
     </ul>
   );
 };
-export default ImageGallery;
 
 ImageGallery.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 }
+
+export default ImageGallery;

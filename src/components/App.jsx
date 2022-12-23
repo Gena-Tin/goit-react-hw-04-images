@@ -8,6 +8,7 @@ import Button from './Button/Button';
 import Loader from './Loader/Loader';
 import Modal from './Modal/Modal';
 import fetchImages from './Services/apiPixaby';
+import Notification from './Notification/Notification';
 
 export function App() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -17,6 +18,9 @@ export function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [targetImage, setTargetImage] = useState(null);
+  const [notification, setNotification] = useState(false);
+
+  const perPage = 12;
 
   useEffect(() => {
     if (searchQuery === '') {
@@ -24,14 +28,20 @@ export function App() {
     }
     setIsLoading(true);
 
-    fetchImages(searchQuery, page)
+    fetchImages(searchQuery, page, perPage)
       .then(data => {
         if (data.hits.length === 0) {
+          setNotification(true);
           setLoadMore(false);
           setIsLoading(false);
+        } else if (data.hits.length < perPage) {
+          setLoadMore(false);
+          setIsLoading(false);
+          setNotification(true);
         } else {
           setLoadMore(true);
         }
+
         if (page === 1) {
           setImages(data.hits);
         } else {
@@ -46,11 +56,12 @@ export function App() {
         console.log('catch = ' + error);
       })
       .finally(() => setIsLoading(false));
-  }, [searchQuery, page]);
+  }, [page, searchQuery]);
 
   useEffect(() => {
     setImages([]);
     setPage(1);
+    setNotification(false);
   }, [searchQuery]);
 
   const loadMoreHandler = () => {
@@ -86,8 +97,9 @@ export function App() {
           toggleModal={toggleModal}
         />
       )}
+      {notification && <Notification message={'Nothing else found'} />}
       {isLoading && <Loader />}
-      {loadMore && <Button onClick={loadMoreHandler} massage={'Load more'} />}
+      {loadMore && <Button onClick={loadMoreHandler} message={'Load more'} />}
     </div>
   );
 }
